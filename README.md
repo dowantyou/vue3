@@ -45,6 +45,7 @@ Web端文件夹目录说明
 > ├── tailwind.config.js # TailwindCSS 配置文件
 > └── vite.config.js # Vite 配置文件
 
+
 ```shell
 # 安装依赖
 npm install
