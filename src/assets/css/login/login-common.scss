@@ -1,0 +1,73 @@
+// @/assets/css/login/login-common.scss
+/*  Login登录页的通用样式，使用时记得在组件内引入：
+
+<style lang="css" scoped>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</style>
+<style lang="scss" scoped>
+@import '@/assets/css/login/login-common.scss';
+</style>
+  
+*/
+
+
+/* 移动端logo区域隐藏 */
+@media(max-width: 768px) {
+  #logo {
+    display: none;
+  }
+}
+.InputText {
+    @apply w-full p-3 pl-10 border-3 border-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500;
+  }
+  
+  .CAPTCHA {
+    @apply bg-zinc-100 text-black border-black border-3 font-bold rounded-md py-2 px-4 w-32 h-12;
+  }
+  
+  .relative {
+    img {
+      @apply pointer-events-none; // 让所有icon不可点击
+    }
+  }
+  
+  .border-3 {
+    & {
+      border-width: 3px;
+    }
+  }
+  
+  .FontBold {
+    & {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+  
+  input::placeholder {
+    font-size: 0.92rem;
+    /* 默认字体大小 */
+  }
+  
+  /* 当屏幕宽度在 390px 到 429px 之间时的样式 */
+  @media (min-width: 390px) and (max-width: 429px) {
+    input::placeholder {
+      font-size: 0.755rem;
+    }
+  }
+  
+  /* 当屏幕宽度小于或等于 360px 时的样式 */
+  @media (min-width: 360px) and (max-width: 390px) {
+    input::placeholder {
+      font-size: 0.70rem;
+    }
+  }
+  
+  /* 当屏幕宽度小于或等于 320px 时的样式 */
+  @media (max-width: 360px) {
+    input::placeholder {
+      font-size: 0.65rem;
+    }
+  }

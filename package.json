@@ -1,0 +1,40 @@
+{
+  "name": "lw-web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode dev",
+    "prod": "vite --mode prod",
+    "build:prod": "vite build --mode prod",
+    "preview": "vite preview --port 8080 --mode prod"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "ant-design-vue": "^4.0.0-rc.6",
+    "axios": "^1.5.0",
+    "element-plus": "^2.3.9",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.6",
+    "pinia-plugin-persistedstate": "^3.2.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "vue3-puzzle-vcode": "^1.1.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue-macros/reactivity-transform": "^0.3.20",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.2.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "postcss": "^8.4.38",
+    "prettier": "3.2.5",
+    "sass": "^1.66.1",
+    "tailwindcss": "^3.4.3",
+    "unplugin-auto-import": "^0.16.6",
+    "vite": "^4.5.3",
+    "vite-plugin-eslint": "^1.8.1"
+  }
+}
