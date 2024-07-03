@@ -44,3 +44,8 @@ app.use(router);
 
 // 挂载应用到 DOM 中
 app.mount('#app');
+
+// 引入并注册 Element Plus 组件库和样式
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+app.use(ElementPlus);

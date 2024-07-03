@@ -8,7 +8,7 @@ const instance = axios.create({
   timeout: 10000, // 设置超时时间
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer your_token_here' // 设置统一的请求头
+    // 'JwtString': 'Pinia_Store_token' // 设置统一的请求头
   }
 });
 

@@ -1,12 +1,17 @@
 // src/store/modules/userStore.js
 import { defineStore } from 'pinia';
 import { localStorage } from '@/utils/storage.js';
-import { getJWTByPassword }
-   from '@/api/user_action.js';
+import { getJWTByPassword } from '@/api/user_action.js';
+import { getUserProfile, getUserInfo } from '@/api/user_action.js';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     token: null, // 用户认证令牌
+    isLoggedIn: false, // 用户是否已登录
+    avatar: null,
+    username: null,
+    phone: null,
+    email: null,
   }),
   
   actions: {
@@ -18,7 +23,9 @@ export const useUserStore = defineStore('user', {
           this.token = response.jwtString;
           localStorage.set('token', this.token);
           // javascript:console.log(localStorage.getItem('token')) // 控制台上查看已存储的 token
-          // 执行其他登录后的操作...
+          this.isLoggedIn = true;
+          // await this.updateUserInfo();
+          // await this.fetchUserAvatar();
         } else {
           console.error('登录失败:', response.msg);
         }
@@ -32,11 +39,41 @@ export const useUserStore = defineStore('user', {
     logout() {
       this.token = null;
       localStorage.remove('token');
+      this.isLoggedIn = false;
       // 待补充：执行其他登出操作...
     },
 
-    // 其他接口
+    // 获取用户头像
+    async fetchUserAvatar() {
+      try {
+        const response = await getUserProfile();
+        if (response.status === 'success') {
+          this.avatar = `data:image/${response.file_type};base64,${response.file_base64_string}`;
+        } else {
+          console.error('获取头像失败:', response.msg);
+        }
+      } catch (error) {
+        console.error('获取头像请求失败:', error);
+      }
+    },
+    // 获取用户信息
+    async updateUserInfo() {
+      try {
+        const response = await getUserInfo();
+        if (response.status === 'success') {
+          this.username = response.username;
+          this.email = response.email;
+          this.phone = response.phone;
+        } else {
+          console.error('获取用户信息失败:', response.msg);
+        }
+      } catch (error) {
+        console.error('获取用户信息请求失败:', error);
+      }
+    },
 
-    
-  }
+
+  } 
 });
+    
+export default useUserStore;
