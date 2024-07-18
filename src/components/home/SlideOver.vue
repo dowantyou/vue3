@@ -1,5 +1,5 @@
 <template>
-    <div class="relative z-50 w-auto h-auto" v-if="trigger === 'button'">
+    <div class="relative z-[99] w-auto h-auto" v-if="trigger === 'button'">
         <button @click="toggleSlideOver(true)"
             class="inline-flex text-base font-bold items-center justify-center  p-4  transition-colors bg-white border rounded-full hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">
             <img class="w-8 h-8 pointer-events-none" src="@/assets/images/icon/search-chat.svg" alt="">
@@ -20,7 +20,7 @@
                                                 id="slide-over-title">与ChatGPT聊天🤖</h2>
                                             <button @click="toggleSlideOver(false)"
                                                 class="absolute top-0 right-0 z-30 flex items-center justify-center px-3 py-2 mt-4 mr-5 space-x-1 text-xs font-medium uppercase border rounded-md border-neutral-200 text-neutral-600 hover:bg-neutral-100">
-                                                <span class="font-bold text-gray-950 text-base">关闭页面</span>
+                                                <span class="w-16 ml-0 font-bold text-gray-950 text-base">关闭页面</span>
                                             </button>
                                         </div>
                                     </div>

@@ -2,100 +2,190 @@
 <template>
   <div class="main">
     <div class="search-container">
-      <textarea placeholder="Search..." rows="1"></textarea>
-      <button>
+      <textarea placeholder="Search..." rows="1" ref="textareaRef" @click="animateUI"></textarea>
+
+      <!-- Tabs 组件 -->
+      <div class="tabs" :style="tabsStyle" ref="tabsRef">
+        <ul class="tab-list">
+          <li v-for="tab in tabs" :key="tab" :class="{ 'active': activeTab === tab }" @click="onTabClick(tab)"
+            class="relative cursor-pointer py-2 px-4 transition-all duration-300 ease-in-out">
+            <div v-if="activeTab === tab" class="pt-line"></div>
+            {{ tab }}
+          </li>
+        </ul>
+      </div>
+
+      <!--Dropdown 触发按钮 -->
+      <div class="dropdown" ref="dropdownRef">
+        <div class="dropdown-button" @click="toggleDropdown">
+          <span>{{ selectedOption }}</span>
+        </div>
+        <!-- 下拉菜单依赖于 dropdownVisible -->
+        <ul v-if="dropdownVisible" class="dropdown-content">
+          <li v-for="option in getOptionsForTab(activeTab)" :key="option"
+            :class="{ 'selected': selectedOption === option }" @click="selectOption(option); toggleDropdown;">
+            {{ option }}
+          </li>
+        </ul>
+      </div>
+
+      <button @click="">
         <!-- light it -->
       </button>
     </div>
-    <!-- <div class="content-wrapper">
-        <img src="@/assets/images/lw_web.png" alt="Logo" class="logo" />        
-        <div class="content"> -->
-    <!-- 这里是一段内容 -->
-    <!-- <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> -->
-    <!-- 这里还是一段内容 -->
-    <!-- </div> -->
-    <!-- </div> -->
+    <div class="content-wrapper">
+      <div class="content" ref="contentRef">
+        这里是一段内容
+      </div>
+      <img ref="logoRef" src="@/assets/images/lw_web.png" alt="Logo" class="logo" v-show="!isFocused" />
+
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Main',
-  mounted() {
-    this.animateUI();
-  },
-  methods: {
-    animateUI() {
-      const textarea = this.$el.querySelector('.search-container textarea');
-      const logo = this.$el.querySelector('.content-wrapper .logo');
-      const content = this.$el.querySelector('.content-wrapper .content');
-      let logoReference;
+<script setup>
+import { onMounted, watch, nextTick } from 'vue';
+const activeTab = ref('词典'); // 默认选中词典
+const dropdownVisible = ref(false);
+const tabs = ['词典', '语法', '资源'];
+const selectedOption = ref('');
+// 计算属性，根据当前激活的 tab 返回对应的选项
+const getOptionsForTab = computed(() => {
+  const options = {
+    '词典': ['英文', '中文'],
+    '语法': ['分析', '纠错'],
+    '资源': ['外刊', '真题', '经典']
+  };
+  return tab => options[tab] || [];
+});
+// 更新 selectedOption 为当前 tab 的首个选项
+watch(activeTab, (newTab) => {
+  selectedOption.value = getOptionsForTab.value(newTab)[0];
+});
+function onTabClick(tab) {
+  activeTab.value = tab;
+  selectedOption.value = getOptionsForTab.value(tab)[0]; // 设置 selectedOption 为首个选项
+  dropdownVisible.value = false; // 点击 tab 时关闭下拉菜单
+}
+const toggleDropdown = () => {
+  dropdownVisible.value = !dropdownVisible.value;
+};
+const selectOption = (option) => {
+  selectedOption.value = option; // 更新当前选中的选项
+  console.log('Selected option:', selectedOption.value);
+  dropdownVisible.value = false;
+};
 
-      textarea.addEventListener('input', this.handleTextareaInput.bind(this));
-      textarea.addEventListener('focus', this.handleTextareaFocus.bind(this));
-      textarea.addEventListener('blur', this.handleTextareaBlur.bind(this));
 
-      this.initAnimation(textarea, logo, content);
-    },
-    initAnimation(textarea, logo, content) {
-      content.style.minHeight = '0';
-    },
-    handleTextareaInput() {
-      const textarea = this.$el.querySelector('.search-container textarea');
-      if (textarea.scrollHeight > 10) {
-        textarea.style.height = 'auto';
-      }
-      if (textarea.scrollHeight > 90) {
-        textarea.style.height = '90px';
-      }
-    },
-    handleTextareaFocus() {
-      const content = this.$el.querySelector('.content-wrapper .content');
-      this.animateContentIn(content);
-      this.hideLogo();
-    },
-    handleTextareaBlur() {
-      const textarea = this.$el.querySelector('.search-container textarea');
-      const content = this.$el.querySelector('.content-wrapper .content');
-      if (textarea.value.trim() === '') {
-        this.animateContentOut(content);
-        this.showLogo();
-      }
-    },
-    animateContentIn(content) {
-      content.style.opacity = '1';
-      content.style.transform = 'translateY(0)';
-      content.style.minHeight = '75%';
-      document.body.style.overflow = 'hidden';
-    },
-    animateContentOut(content) {
-      content.style.opacity = '0';
-      content.style.transform = 'translateY(100%)';
-      content.style.minHeight = '0';
-      document.body.style.overflow = '';
-    },
-    hideLogo() {
-      const logo = this.$el.querySelector('.content-wrapper .logo');
-      if (logo.parentNode) {
-        this.logoReference = logo; // 存储引用
-        logo.parentNode.removeChild(logo); // 从页面移除Logo
-      }
-    },
-    showLogo() {
-      const contentWrapper = this.$el.querySelector('.content-wrapper');
-      if (this.logoReference && !contentWrapper.querySelector('.logo')) {
-        contentWrapper.appendChild(this.logoReference); // 使用存储的引用重新添加Logo
-        this.logoReference.style.marginTop = '-62.4px';
-        this.logoReference = null; // 清除引用
-      }
-    }
+// 关闭下拉菜单的方法
+const closeDropdown = () => {
+  dropdownVisible.value = false;
+};
+
+// 确保点击下拉菜单外部时关闭菜单
+const dropdownRef = ref(null);
+// 确保 closeDropdownIfClickedOutside 中有非空检查
+const closeDropdownIfClickedOutside = (event) => {
+  // 检查 dropdownRef 是否有值
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+    closeDropdown();
   }
 };
+
+document.addEventListener('click', closeDropdownIfClickedOutside);
+
+onUnmounted(() => {
+  document.removeEventListener('click', closeDropdownIfClickedOutside);
+});
+// 创建响应式引用
+const textareaRef = ref(null);
+const contentRef = ref(null);
+const logoRef = ref(null);
+const isFocused = ref(false);
+// 使用 reactive 或 ref 来定义样式状态
+const tabsStyle = reactive({
+  marginTop: '83px'
+});
+
+// 使用 nextTick 等待 DOM 更新
+onMounted(async () => {
+  await nextTick();
+  animateUI();
+  hideLogo();
+  selectedOption.value = getOptionsForTab.value(activeTab.value)[0] || activeTab.value;
+});
+const hideLogo = () => {
+  const logo = logoRef.value;
+  if (logo && logo.parentNode) {
+    // 存储引用并在 DOM 中删除元素
+    logo.parentNode.removeChild(logo);
+  }
+};
+const animateUI = () => {
+  textareaRef.value.addEventListener('input', handleTextareaInput);
+  textareaRef.value.addEventListener('focus', handleTextareaFocus);
+  textareaRef.value.addEventListener('blur', handleTextareaBlur);
+};
+
+const handleTextareaInput = () => {
+  const textarea = textareaRef.value;
+  if (textarea.scrollHeight > 10) {
+    textarea.style.height = 'auto';
+    tabsStyle.marginTop = '83px';
+  }
+  if (textarea.scrollHeight > 90) {
+    textarea.style.height = '90px';
+    tabsStyle.marginTop = '124px';
+  }
+};
+
+const handleTextareaFocus = () => {
+  isFocused.value = true;
+  animateContentIn();
+};
+
+const handleTextareaBlur = () => {
+  const textarea = textareaRef.value;
+  if (textarea.value.trim() === '') {
+    isFocused.value = false;
+    animateContentOut();
+  }
+};
+
+const animateContentIn = () => {
+  const content = contentRef.value;
+  content.style.opacity = '1';
+  content.style.transform = 'translateY(0)';
+  content.style.minHeight = '75%';
+  content.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+};
+
+const animateContentOut = () => {
+  const content = contentRef.value;
+  content.style.opacity = '0';
+  // content.style.transform = 'translateY(100%)';
+  content.style.display = 'none';
+  document.body.style.overflow = '';
+};
+
+// 监听 textarea 的值变化，以便在内容变化时调整高度
+watch(isFocused, (newValue) => {
+  if (newValue) {
+    handleTextareaFocus();
+  } else {
+    handleTextareaBlur();
+  }
+});
 </script>
 
 
 
 <style scoped>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .main {
   grid-row: 2;
   grid-column: 1;
@@ -105,27 +195,28 @@ export default {
   /* justify-content: center; */
   justify-content: flex-start;
   position: relative;
+  z-index: 50;
 }
 
 .content-wrapper {
   top: 50%;
   /* 初始状态，内容位于视窗中心 */
   left: 50%;
-  /* transform: translate(-50%, -50%); */
   height: 100%;
   text-align: center;
   opacity: 1;
-  /* 初始状态，内容可见 */
-  /* transition: opacity 0.5s ease, transform 0.5s ease; */
+  min-width: none;
 }
 
 .logo {
   /* Logo图片样式 */
-  width: 400px;
-  border-radius: 10px;
+  width: 450px;
+  border-radius: 1rem;
   -webkit-user-drag: none;
   user-select: none;
   pointer-events: none;
+  z-index: -1;
+  margin-top: -8%;
 }
 
 .search-container {
@@ -133,16 +224,21 @@ export default {
   border: 1px solid #f5f5f5;
   padding: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  border-top-right-radius: 20px;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  /* position: sticky; 这里是永远悬浮在固定位
-        top: 50px; */
+  padding-bottom: 42px;
+  /* 这里是永远悬浮在固定位 */
+  /* position: sticky;
+  top: 50px; */
+
 }
 
 .search-container textarea {
-  width: 600px;
+  width: 35vw;
   padding: 5px;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -168,19 +264,17 @@ export default {
 }
 
 .search-container button {
+  margin-top: 10px;
   padding: 20px 20px;
-  margin-left: 18px;
+  margin-left: 10px;
   background-color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background-image: url("@/assets/images/LW.png");
   background-size: cover;
-  /* 覆盖整个元素 */
   background-repeat: no-repeat;
-  /* 防止图片重复 */
   background-position: center;
-  /* 居中显示 */
 }
 
 .content {
@@ -190,13 +284,14 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   text-align: center;
-  min-width: 620.03px;
-  min-height: 75%;
+  min-width: 60.03px;
+  width: 42.29vw;
+  box-sizing: border-box;
+  /* min-height: 30vh; */
   opacity: 0;
-  /* 初始状态，内容不可见 */
   transform: translateY(100%);
-  /* 初始状态，内容位于下方 */
   transition: opacity 0.5s ease, transform 0.5s ease;
+
 }
 
 /* 当搜索框获得焦点时，触发动画 */
@@ -209,6 +304,66 @@ export default {
 .search-container textarea:focus~.content-wrapper .content {
   opacity: 1;
   transform: translateY(0);
-  /* 内容向上移动到视窗中心 */
+}
+
+/* Tabs 和 Dropdown 的样式 */
+.tabs {
+  @apply -mb-2;
+  flex-direction: column;
+  /* 垂直排列 */
+  align-items: flex-start;
+  position: absolute;
+  padding: 0px 0px;
+}
+
+.tab-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.tab-list li {
+  @apply px-4 pb-[0.5rem] pt-[0.78rem] mx-2 text-sm font-semibold text-gray-600 rounded-lg;
+  cursor: pointer;
+}
+
+.tab-list li.active {
+  @apply text-gray-900 border-gray-300;
+  font-weight: bold;
+}
+
+.pt-line {
+  @apply absolute top-1 pb-[0.199rem] left-0 w-full h-0.5 bg-black transition-all duration-300 ease-in-out;
+}
+
+/* Dropdown 样式 */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: -2.3%;
+}
+
+.dropdown-content {
+  @apply absolute z-10 list-none bg-white rounded-lg shadow-lg py-1;
+  display: none;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-button {
+  @apply px-4 py-2 text-sm font-semibold text-left text-gray-600 bg-white rounded-lg border border-gray-300 shadow-md cursor-pointer;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown 选项样式 */
+.dropdown-content li {
+  @apply px-4 py-2 text-sm text-gray-600 cursor-pointer;
+}
+
+.dropdown-content li:hover {
+  @apply bg-gray-200;
 }
 </style>

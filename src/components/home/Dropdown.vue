@@ -1,6 +1,6 @@
 <!-- src/components/home/Dropdown.vue -->
 <template>
-    <div class="absolute z-10 right-5 mt-5 justify-center">
+    <div class="absolute z-[98] right-5 mt-5 justify-center">
         <div class="relative inline-block" @keydown.esc="close" @focusin="closeIfOutside">
             <!-- Button -->
             <button ref="button" :aria-expanded="isOpen" type="button" class="relative" @mouseenter="handleMouseEnter"
@@ -13,7 +13,7 @@
 
             <!-- Panel -->
             <div ref="panel"
-                class="fixed right-2 z-10 -mt-7 w-60 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg"
+                class="fixed right-2 z-[98] -mt-7 w-60 divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white text-left text-sm shadow-lg"
                 v-show="isOpen" @mouseleave="handleMouseLeave">
                 <!-- Panel Content -->
                 <div class="py-3 px-4" v-if="userStore.isLoggedIn">

@@ -1,0 +1,92 @@
+{
+    # 词条，词条主键，str类型
+    "lemma": "template",
+
+    # 音标，dict类型，其key一定会有如下字段：light-ipa, old-ipa, mw-ipa
+    "phonetic_transcription_dict": {
+        
+      # light-ipa注音，list类型（所含元素皆为str），一定不为空
+      # 可能有1~2个元素，2个元素的例子可以看 “content” 词条，其含义是，第一个是名词的发音，第二个是动词的发音
+      "light-ipa": ["ˢtem₂ pla₃₋ te₀"],
+
+      # 传统音标，list类型（所含元素皆为str），可能有1~2个元素……，可能为空
+      "old-ipa": ["ˈtemplət"],
+
+      # 韦氏音标，list类型（所含元素皆为str），可能有1~2个元素……，可能为空
+      "mw-ipa": ["ˈtem-plət"],
+    },
+
+    # 屈折变化（例如名词复数形式，动词过去式-ed，动词现在分词-ing 这些），dict类型，
+    # 其key的所有可能为：
+    # v_3rd     （动词第三人称单数 -s） 
+    # v_present （动词现在分词 -ing）  
+    # v_past    （动词过去式 -ed）
+    # v_perfect （动词现在分词 -done）
+    # n_plural  （名词复数形式 -s）
+    # adj_er    （形容词比较级 -er）
+    # adj_est   （形容词最高级 -est）
+    # prototype （原型）
+    "inflections_dict": { "n_plural": ["templates"] },
+
+    # 本单词所具备的所有词性（以英文定义为准），list类型（所含元素皆为str）
+    # 所有的可能为：
+    # adj.   （形容词 adjective）
+    # n.     （名词 noun）
+    # v.     （动词 verb）（既可作及物动词，也可作不及物动词）
+    # vi.    （不及物动词 intransitive verb）
+    # vt.    （及物动词 transitive verb）
+    # adv.   （副词 adverb）
+    # conj.  （连词 conjunction）
+    # prep.  （介词 preposition）
+    # aux.   （助动词 auxiliary verb）
+    # mod.   （情态动词 modal verb）
+    # int.   （感叹词 interjection）
+    "part_of_speech_list": ["n."],
+
+    # 中文含义，dict类型，其 key 的所有可能同上面"part_of_speech_list"字段，即 adj. n. v.……
+    "senses_dict_zh": { "n.": ["模板", "样板", "标准", "型板", "模框"] },
+
+    # 英文定义，dict类型，里面的许多字段都是可变的，既可能会出现，也可能不出现，可能有内容，也可能为空
+    "senses_dict": {
+      # 名词性的所有定义，list类型（所含元素皆为dict）
+      "n.": [
+        {
+          # 单词的定义之一，str类型，一定不为空
+          "shared_definition": "a shape or pattern that is cut out of a hard material (such as metal or plastic) and used to make the same shape and pattern in other pieces of material",
+          # 该定义下的例句，list类型（所含元素皆为str），可能为空
+          "example_list": [],
+          # 该定义下的额外笔记，list类型（所含元素皆为dict），可能为空
+          "notes_list": []
+        },
+        {
+          # 单词的定义之一，str类型，一定不为空
+          "shared_definition": "a computer document that has the basic format of something (such as a business letter, chart, graph, etc.) and that can be used many different times ",
+          # 单词的定义，str类型，list类型（所含元素皆为str），这是不为空的例子，即存在着一条例句（别的单词可能会有多条例句）
+          "example_list": [
+            "The software includes templates for common marketing documents like pamphlets and flyers."
+          ],
+          # 该定义下的额外笔记，list类型（所含元素皆为str），可能为空
+          "notes_list": []
+        },
+        {
+          # 单词的定义之一，str类型，一定不为空
+          "shared_definition": "something that is used as an example of how to do, make, or achieve something",
+          # 该定义下的例句，list类型（所含元素皆为str），可能为空
+          "example_list": [],
+           # 该定义下的额外笔记，list类型（所含元素皆为dict），这是不为空的例子，即存在着一组额外的笔记（别的单词可能会有多组额外笔记）
+          "notes_list": [
+            {
+              # 笔记内容，str类型，一定不为空
+              "note": "often + for ",
+              
+              # 笔记的例句，list类型（所含元素皆为str），可能为空
+              "example_list": [
+                "The bridge's design became a template for other bridges.",
+                "Her career was my template for success in the publishing industry. [=I followed her example of how to succeed in the publishing industry]"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }

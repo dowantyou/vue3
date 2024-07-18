@@ -11,12 +11,65 @@
 body {
     background: linear-gradient(to bottom, #e0f7e9, #d0f0fd);
     height: 100vh;
-    width: 100vw;
+    /* width: 100%; */
     margin: 0;
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     font-family: Arial, sans-serif;
-    /* font-family: 'SIMLI', */
+    /* font-family: 'SIMLI'; */
     min-height: 100vh;
   }
+  /* 隐藏页面中的滚动条 */
+  /* IE/Edge */
+  body {
+    -ms-overflow-style: none;
+  }
+  /* Chorme */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  /* Firefox/Safari */
+  html {
+    /* overflow: -moz-hidden-unscrollable; */
+    scrollbar-width: none;
+    height: 100%;
+  }
+  body {
+    height: 100%;
+    width: calc(100vw + 18px);
+    overflow: auto;
+  }
+  
+/* 其他组件若要隐藏滚动条，可以直接引用 no-scrollbar 类
+  一定要置于css首行，具体格式为：
+  @import '@/assets/css/main.css';
+
+  .需要隐藏滚动条的类名 {
+  @apply no-scrollbar;
+  }
+*/
+.no-scrollbar {
+  /* Safari */
+  scrollbar-width: none;
+  /* IE/Edge */
+  overflow: auto;
+  /* Chrome/Firefox */
+  overflow-y: scroll;
+  /* Firefox */
+  width: calc(100vw + 18px);
+  /* 调整宽度以抵消隐藏滚动条后的空间变化 */
+  height: 100%;
+  margin: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
+}
+
+html {
+  overflow: -moz-hidden-unscrollable;
+  /* Firefox */
+  height: 100%;
+}

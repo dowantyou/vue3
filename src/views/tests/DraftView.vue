@@ -7,9 +7,8 @@
         <div class="flex flex-1 flex-row">
             <nav class="order-first w-60 bg-blue-100">Navigation</nav>
             <main class="flex-1 bg-blue-50">
-                <!-- <Tabs /> -->
-                <!-- <SearchBox /> -->
-                <Test />
+                <Main />
+                <!-- <TestButton /> -->
             </main>
 
             <aside class="w-32 bg-blue-100 p-4">Side-搜索记录</aside>
@@ -20,8 +19,9 @@
                 <SlideOver trigger="button" />
             </div>
         </div>
-        <footer class="bg-blue-200 p-4 h-10">
-            <Footer />
+
+        <footer class="bg-blue-200 h-10">
+            <FooterBox />
         </footer>
     </div>
 </template>
@@ -31,9 +31,9 @@ import Dropdown from '@/components/home/Dropdown.vue';
 import Footer from '@/components/home/Footer.vue';
 import SlideOver from '@/components/home/SlideOver.vue';
 import LogoGroup from '@/components/home/LogoGroup.vue';
-import Tabs from '@/components/home/Tabs.vue';
-import SearchBox from '@/components/home/SearchBox.vue';
-import Test from '@/components/home/Test.vue';
+import Main from '@/components/home/Main.vue';
+import FullCard from '@/components/home/card/FullCard.vue';
+import FooterBox from '@/components/home/Footerbox/FooterBox.vue';
 </script>
 <style lang="css" scoped>
 @tailwind base;

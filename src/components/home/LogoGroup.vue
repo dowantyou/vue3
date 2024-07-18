@@ -1,6 +1,6 @@
 <!-- src/components/home/LogoGroup.vue -->
 <template>
-    <div class="relative flex flex-col w-full h-full rounded-lg cursor-pointer">
+    <div class="z-[100] relative flex flex-col w-full h-full rounded-lg cursor-pointer">
         <!-- Logo 1 -->
         <div class="logo-container flex items-center mb-1 h-20 pl-4" @mouseenter="isExpanded1 = true"
             @mouseleave="isExpanded1 = false">
@@ -26,7 +26,6 @@
 <script setup>
 const isExpanded1 = ref(false);
 const isExpanded2 = ref(false);
-import { ref } from 'vue'
 import imageUrl1 from '@/assets/images/LW.png'; // 图片1的路径
 import imageUrl2 from '@/assets/images/Transparent_lw_web.png'; // 图片2的路径
 
@@ -42,6 +41,13 @@ import imageUrl2 from '@/assets/images/Transparent_lw_web.png'; // 图片2的路
     position: relative;
 }
 
+/* 小于768px宽度，logo-container不显示 */
+@media (max-width: 767px) {
+    .logo-container {
+        display: none;
+    }
+}
+
 /* 更新 .text-description 的样式 */
 .text-description {
     position: absolute;
@@ -55,7 +61,7 @@ import imageUrl2 from '@/assets/images/Transparent_lw_web.png'; // 图片2的路
     font-size: x-small;
 }
 
-/* Logo 2 的文字描述需要在底部 */
+/* Logo 2 的文字描述在底部 */
 .text-description.top-full {
     top: 100%;
     margin-top: -5rem;

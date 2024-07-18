@@ -41,6 +41,7 @@ export const useUserStore = defineStore('user', {
       localStorage.remove('token');
       this.isLoggedIn = false;
       // 待补充：执行其他登出操作...
+      // location.reload();
     },
 
     // 获取用户头像

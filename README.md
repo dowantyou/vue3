@@ -23,7 +23,7 @@ Web端文件夹目录说明
 > │ │ ├── components/ 		# UI组件         
 > │ ├── router/						# 路由配置         
 > │ │ ├── index.js 			# 配置中心         
-> │ ├── store/ 					# Pinia 状态管理（暂时不用）         
+> │ ├── store/ 					# Pinia 状态管理         
 > │ ├── untils/ 				# 自定义工具         
 > │ ├── views/ 				# 页面组件         
 > │ ├── App.vue 				# 主组件          
@@ -43,6 +43,20 @@ Web端文件夹目录说明
 > ├── package.json 					# 项目依赖和脚本配置          
 > ├── README.md 					# 项目说明文件          
 > └── vite.config.js 					# Vite 配置文件          
+
+技术选型（v1）：
+
+| 依赖         | 说明         | 版本号 |
+| ------------ | ------------ | ------ |
+| vue/cli      | Vue脚手架    | 4.5.13 |
+| Vite         | 热部署启动器 | 4.4.5  |
+| Pinia        | 状态管理     | 2.1.6  |
+| Axios        | Ajax请求     | 1.5.0  |
+| Sass         | CSS增强框架  | 1.66.1 |
+| Vue Router   | 路由管理器   | 4.2.4  |
+| Element Plus | UI组件1      | 2.1.0  |
+| Tailwind     | CSS编写组件  | 3.4.3  |
+| Vuetify      | 响应式UI组件 | 在考虑 |
 
 
 ```shell
