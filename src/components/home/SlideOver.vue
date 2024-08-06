@@ -29,6 +29,8 @@
                                             <div
                                                 class="relative h-full overflow-hidden border border-dashed rounded-md border-neutral-300">
                                                 <!-- Content here -->
+                                                 <ChatBox />
+
                                             </div>
                                         </div>
                                     </div>
@@ -44,6 +46,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import ChatBox from '@/components/home/chatgpt/ChatBox.vue';
 const props = defineProps({
     trigger: String
 });
