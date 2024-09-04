@@ -1,35 +1,32 @@
+// src\hooks\index.js
 import { ref } from 'vue'
 import { StreamGpt } from '@/api/chatfetch/stream.js'
 import { useChatStore } from '@/store/modules/chatStore.js'
-
 export function useGpt (history = false) {
   const streamingText = ref('')
   const streaming = ref(false)
   const msgList = ref([])
-
-  // 创建状态管理实例
   const store = useChatStore()
 
-  // 设置 onConsume 回调
   store.setOnConsume((str) => {
     streamingText.value += str || ''
-    console.log('str', str)
   })
 
+  const currentKey = ref(store.currentKey)
+  const recordList = ref(store.recordList)
 
-  // 由于 StreamGpt 现在是一个函数，我们需要调整 stream 方法来调用它
-  const stream = async function (prompt) {
+  const saveHistory = () => {
+    store.saveHistory()
+  }
+
+  const stream = async function (prompt, model) {
     try {
       await StreamGpt({
-        onStart: prompt => {
+        onStart: (prompt) => {
           streaming.value = true
-          msgList.value.push({
-            role: 'user',
-            content: prompt
-          })
+          msgList.value.push({ role: 'user', content: prompt })
         },
-        onPatch: text => {
-          console.log('onPatch', text)
+        onPatch: (text) => {
           store.add(text)
         },
         onCreated: () => {
@@ -38,23 +35,26 @@ export function useGpt (history = false) {
         onDone: () => {
           store.done()
           streaming.value = false
-          msgList.value.push({
-            role: 'system',
-            content: streamingText.value
-          })
+          msgList.value.push({ role: 'system', content: streamingText.value })
           streamingText.value = ''
+
+          recordList.value[currentKey.value] = msgList.value
+
+
+          console.log('recordList', currentKey.value)
+          saveHistory()
         }
-      }, prompt, history ? msgList.value : [])
+      }, prompt, history ? msgList.value : [], model)
     } catch (error) {
       console.error('Error during stream:', error)
     }
   }
 
-
   return {
     streamingText,
     streaming,
     msgList,
-    stream
+    stream,
+    saveHistory
   }
 }

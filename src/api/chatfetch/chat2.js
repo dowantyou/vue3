@@ -1,5 +1,6 @@
+// src\api\chatfetch\chat2.js
 import { useUserStore } from '@/store/modules/userStore.js'
-export async function getChatStream (messages) {
+export async function getChatStream (messages, model) {
   const userStore = useUserStore()
   const url = '/api/v1/openai-sse/'
   const headers = {
@@ -7,7 +8,7 @@ export async function getChatStream (messages) {
     'jwtString': userStore.token,
   }
   const data = {
-    model: "gpt-3.5-turbo",
+    model: model,
     messages,
     stream: true
   }

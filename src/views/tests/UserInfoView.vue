@@ -24,7 +24,7 @@
 <script setup>
 import Dropdown from '@/components/home/Dropdown.vue';
 import Footer from '@/components/home/Footer.vue';
-import SlideOver from '@/components/home/SlideOver.vue';
+import SlideOver from '@/components/home/chatgpt/SlideOver.vue';
 </script>
 <style lang="css" scoped>
 @tailwind base;

@@ -31,7 +31,7 @@
 <script setup>
 import Dropdown from '@/components/home/Dropdown.vue';
 import Footer from '@/components/home/Footer.vue';
-import SlideOver from '@/components/home/SlideOver.vue';
+import SlideOver from '@/components/home/chatgpt/SlideOver.vue';
 import LogoGroup from '@/components/home/LogoGroup.vue';
 import Main from '@/components/home/Main.vue';
 import FullCard from '@/components/home/card/FullCard.vue';

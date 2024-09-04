@@ -1,3 +1,4 @@
+// src\api\chatfetch\chat2.js
 import { getChatStream } from './chat2'
 
 export function parsePack (str) {
@@ -20,7 +21,15 @@ export function parsePack (str) {
   return result
 }
 
-export async function StreamGpt (options, prompt, history = []) {
+/**
+ *
+ * @param {钩子函数} options
+ * @param {提问信息} prompt
+ * @param {历史记录} history
+ * @param {模型} model
+ * @returns
+ */
+export async function StreamGpt (options, prompt, history = [], model) {
   let finish = false
   let count = 0
 
@@ -29,7 +38,9 @@ export async function StreamGpt (options, prompt, history = []) {
   // 触发onStart
   onStart && onStart(prompt)
 
-  const response = await getChatStream([...history, { role: 'user', content: prompt }])
+  const messages = [...history, { role: 'user', content: prompt }]
+  const response = await getChatStream(messages, model)
+  console.log('response', response.model)
   if (!response.body) return
 
   // 从response中获取reader

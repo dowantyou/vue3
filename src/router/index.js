@@ -5,7 +5,6 @@ import LoginView from '../views/LoginOrRegister/LoginView.vue'
 import AlpineDropdownView from '../views/tests/AlpineDropdownView.vue'
 import UserInfoView from '../views/tests/UserInfoView.vue'
 import DraftView from '../views/tests/DraftView.vue'
-import ChatGpt from '../views/tests/ChatGpt.vue'
 const routes = [
   {
     path: '/', // 指向主页HomeView.vue
@@ -37,11 +36,6 @@ const routes = [
     name: 'Draft',
     component: DraftView
   },
-  {
-    path: '/chat',
-    name: 'Chat',
-    component: ChatGpt
-  }
 ]
 
 const router = createRouter({
